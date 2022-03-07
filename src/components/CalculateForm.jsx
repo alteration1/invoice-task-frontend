@@ -6,6 +6,8 @@ import { UploadOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/i
 const CalculateForm = (props) => {
     const [loading, setLoading] = useState(false)
     const [total, setTotal] = useState([])
+    const [outCurrency, setOutCurrency] = useState([])
+
 
     const onFinish = (values) => {
         setLoading(true)
@@ -14,6 +16,7 @@ const CalculateForm = (props) => {
         body.append('file', values.file)
         body.append('exchangerates', JSON.stringify(values.exchangerates))
         body.append('outcurrency', values.outcurrency.trim())
+        setOutCurrency(values.outcurrency)
         if(values.vat){
             body.append('vat', values.vat.trim())
         }
@@ -144,7 +147,7 @@ const CalculateForm = (props) => {
         {total && <Row className="register-form">
             {Object.keys(total).map(key => (
                 <Col span={12} offset={6}>
-                    <h3><span>{key}: </span>{total[key]}</h3>
+                    <h3><span>{key}: </span>{total[key]+' '+outCurrency}</h3>
                 </Col>
             ))}
         </Row>}
